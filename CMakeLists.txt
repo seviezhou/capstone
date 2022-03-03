@@ -4,10 +4,6 @@ cmake_minimum_required(VERSION 2.6)
 # Detect whether capstone is compiled as top-level or a subdirectory
 set(PROJECT_IS_TOP_LEVEL OFF)
 
-project(capstone
-    VERSION 5.0.0
-)
-
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
