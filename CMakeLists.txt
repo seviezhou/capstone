@@ -1,25 +1,8 @@
 # For MSVC_RUNTIME_LIBRARY
-cmake_minimum_required(VERSION 3.15)
-
-if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
-    message(FATAL_ERROR "In-tree builds are not supported. Run CMake from a separate directory: cmake -B build")
-endif()
+cmake_minimum_required(VERSION 2.6)
 
 # Detect whether capstone is compiled as top-level or a subdirectory
 set(PROJECT_IS_TOP_LEVEL OFF)
-if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-    set(PROJECT_IS_TOP_LEVEL ON)
-
-    # Enable folder support
-    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-endif()
-
-# https://cmake.org/cmake/help/latest/policy/CMP0042.html
-cmake_policy(SET CMP0042 NEW)
-
-# https://cmake.org/cmake/help/latest/policy/CMP0091.html
-# Enable support for MSVC_RUNTIME_LIBRARY
-cmake_policy(SET CMP0091 NEW)
 
 project(capstone
     VERSION 5.0.0
