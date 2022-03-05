@@ -833,6 +833,14 @@ typedef enum arm64_vas {
 	ARM64_VAS_1Q,
 } arm64_vas;
 
+typedef enum arm64_vess {
+	ARM64_VESS_INVALID = 0,
+	ARM64_VESS_B,
+	ARM64_VESS_H,
+	ARM64_VESS_S,
+	ARM64_VESS_D,
+} arm64_vess;
+
 /// Memory barrier operands
 typedef enum arm64_barrier_op {
 	ARM64_BARRIER_INVALID = 0,
@@ -1348,6 +1356,7 @@ typedef struct arm64_op_mem {
 typedef struct cs_arm64_op {
 	int vector_index;	///< Vector Index for some vector operands (or -1 if irrelevant)
 	arm64_vas vas;		///< Vector Arrangement Specifier
+	arm64_vess vess;	///< Vector Element Size Specifier
 	struct {
 		arm64_shifter type;	///< shifter type of this operand
 		unsigned int value;	///< shifter value of this operand
