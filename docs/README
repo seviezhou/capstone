@@ -63,4 +63,8 @@ Documentation of Capstone disassembly framework.
 	
 * A Micro Capstone-Engine API Documentation in Chinese
 
+<<<<<<< HEAD
         https://github.com/capstone-engine/capstone/blob/master/docs//Capstone-Engine-Documentation
+=======
+        https://github.com/kabeor/Micro-Capstone-Engine-API-Documentation/blob/master/Micro%20Capstone-Engine%20API%20Documentation.md
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e

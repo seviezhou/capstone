@@ -1,8 +1,553 @@
-!# issue 0
+!# issue 1902 PPC psq_st negative displacement
+!# CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN | CS_MODE_PS, CS_OPT_DETAIL
+0xf3,0xec,0x0f,0xf8 == psq_st f31, -8(r12), 0, 0 ; op_count: 4 ; operands[0].type: REG = f31 ; operands[1].type: MEM ; operands[1].mem.base: REG = r12 ; operands[1].mem.disp: 0xfffffff8 ; operands[2].type: IMM = 0x0 ; operands[3].type: IMM = 0x0
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x04,0x03,0x5e == mov b1, v1.b[1] ; operands[1].vas: 0x4 ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x03,0x4e == mov v0.b[1], w22 ; operands[0].vas: 0x4 ; operands[0].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x06,0x4e == mov v0.h[1], w22 ; operands[0].vas: 0x8 ; operands[0].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x0c,0x4e == mov v0.s[1], w22 ; operands[0].vas: 0xb ; operands[0].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x18,0x4e == mov v0.d[1], x22 ; operands[0].vas: 0xd ; operands[0].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x0c,0x03,0x6e == mov v0.b[1], v1.b[1] ; operands[0].vas: 0x4 ; operands[0].vector_index: 1 ; operands[1].vas: 0x4 ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x14,0x06,0x6e == mov v0.h[1], v1.h[1] ; operands[0].vas: 0x8 ; operands[0].vector_index: 1 ; operands[1].vas: 0x8 ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x24,0x0c,0x6e == mov v0.s[1], v1.s[1] ; operands[0].vas: 0xb ; operands[0].vector_index: 1 ; operands[1].vas: 0xb ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x44,0x18,0x6e == mov v0.d[1], v1.d[1] ; operands[0].vas: 0xd ; operands[0].vector_index: 1 ; operands[1].vas: 0xd ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0xc0,0x50,0x05 == fmov z0.h, p0/m, #2.00000000 ; operands[0].vas: 0x8
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0xc0,0x79,0x25 == fmov z0.h, #2.00000000 ; operands[0].vas: 0x8
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xa1,0xca,0xf8,0x25 == mov z1.d, #0x55 ; operands[0].vas: 0xd
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x44,0x81,0x25 == mov p1.b, p1.b ; operands[0].vas: 0x4 ; operands[1].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x40,0x51,0x05 == mov z1.h, p1/m, #1 ; operands[0].vas: 0x8
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x00,0x51,0x05 == mov z1.h, p1/z, #1 ; operands[0].vas: 0x8
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0xc0,0x38,0x25 == mov z0.b, #1 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x71,0x4a,0x01,0x25 == mov p1.b, p2/m, p3.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x61,0x48,0x03,0x25 == mov p1.b, p2/z, p3.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0xa8,0x28,0x05 == mov z1.b, p2/m, w1 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x38,0x20,0x05 == mov z1.b, w1 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x01,0x88,0x20,0x05 == mov z1.b, p2/m, b0 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0x20,0x21,0x05 == mov z0.b, b0 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0x20,0x23,0x05 == mov z0.b, z0.b[1] ; operands[0].vas: 0x4 ; operands[1].vas: 0x4 ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0xc4,0x20,0x05 == mov z0.b, p1/m, z1.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x30,0x61,0x04 == mov z0.d, z1.d ; operands[0].vas: 0xd ; operands[1].vas: 0xd
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x44,0x42,0x25 == movs p0.b, p1/z, p2.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x44,0xc1,0x25 == movs p0.b, p1.b ; operands[0].vas: 0x4 ; operands[1].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x46,0x01,0x25 == not p0.b, p1/z, p2.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x46,0x41,0x25 == nots p0.b, p1/z, p2.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1856 AArch64 SYS instruction operands: tlbi 1 op
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x1f,0x83,0x08,0xd5 == tlbi vmalle1is ; op_count: 1 ; operands[0].type: SYS = 0x3
+
+!# issue 1856 AArch64 SYS instruction operands: tlbi 2 op
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x22,0x87,0x08,0xd5 == tlbi vae1, x2 ; op_count: 2 ; operands[0].type: SYS = 0x16
+
+!# issue 1856 AArch64 SYS instruction operands: at
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x78,0x0c,0xd5 == at s12e0r, x0 ; op_count: 2 ; operands[0].type: SYS = 0x59
+
+!# issue 1856 AArch64 SYS instruction operands: dc
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x22,0x7b,0x0b,0xd5 == dc cvau, x2 ; op_count: 2 ; operands[0].type: SYS = 0x62
+
+!# issue 1856 AArch64 SYS instruction operands: ic
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x75,0x0b,0xd5 == ic ivau, x0 ; op_count: 2 ; operands[0].type: SYS = 0x68
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 16b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 8b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x2 ; operands[1].type: REG = v18 ; operands[1].vas: 0x2
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 16b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 8b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x2 ; operands[1].type: REG = v18 ; operands[1].vas: 0x2
+
+!# issue 1839 AArch64 Incorrect detailed disassembly of ldr
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x41,0x00,0x40,0xf9 == ldr x1, [x2] ; operands[0].access: WRITE ; operands[1].access: READ
+
+// !# issue 1827 x86-16 lcall 0:0xd
+// !# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+// 0x9a,0x0d,0x00,0x00,0x00 == lcall 0:0xd
+
+!# issue 1827 x16 lcall seg:off format
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0xb8,0x01,0x00,0x00,0x00 == mov eax, 1
+0xb9,0x00,0x00,0x00,0x00 == mov ecx, 0
+0x80,0xb8,0x01,0x00,0x00,0x00,0xb9 == cmp byte ptr [eax + 1], 0xb9
+0x00,0x00 == add byte ptr [eax], al
+0x01,0x00 == add dword ptr [eax], eax
+
+!# issue 1827 x16 lcall seg:off format
+!# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+0x33,0xc0 == xor ax, ax
+0xba,0x5a,0xff == mov dx, 0xff5a
+
+!# issue 1708 M68K floating point loads and stores generate the same op_str
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0xf2,0x27,0x74,0x00 == fmove.d fp0, -(a7)
+0xf2,0x1f,0x54,0x80 == fmove.d (a7)+, fp1
+0x4e,0x75 == rts
+
+!# issue 1661 M68K invalid transfer direction in MOVEC instruction
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0x4E,0x7A,0x00,0x02 == movec cacr, d0
+
+!# issue 1653 AArch64 wrong register access read/write flags on cmp instruction
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x3F,0x00,0x02,0xEB == cmp x1, x2 ; operands[0].access: READ
+
+!# issue 1643 M68K incorrect read of 32-bit imm for bsr
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040 , None
+0x61,0xff,0x00,0x00,0x0b,0xea == bsr.l $bec
+
+!# issue 1627 Arm64 LD1 missing immediate operand
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xe0,0x73,0xdf,0x0c == ld1 {v0.8b}, [sp], #8 ; operands[2].type: IMM = 0x8
+
+!# issue 1587 ARM thumb pushed registers write
+!# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
+0x2d,0xe9,0xf0,0x47 == push.w {r4, r5, r6, r7, r8, sb, sl, lr} ; operands[0].access: READ
+
+!# issue 1504 movhps qword ptr
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0f,0x16,0x08 == movhps xmm1, qword ptr [rax] ; Opcode:0x0f 0x16 0x00 0x00
+
+!# issue 1505 opcode 0f
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0f,0xa5,0xc2 == shld edx, eax, cl ; Opcode:0x0f 0xa5 0x00 0x00
+
+!# issue 1478 tbegin.
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x7c,0x20,0x05,0x1d == tbegin. 1 ; Update-CR0: True
+
+!# issue 970 PPC bdnzt lt
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x00,0xff,0xac == bdnzt lt, 0xffffffffffffffac ; operands[0].type: REG = cr0lt
+
+!# issue 970 PPC bdnzt eq
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x02,0xff,0xac == bdnzt eq, 0xffffffffffffffac ; operands[0].type: REG = cr0eq
+
+!# issue 969 PPC bdnzflr operand 2
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x4c,0x10,0x00,0x20 == bdnzflr 4*cr4+lt ; operands[0].type: REG = cr4lt
+
+0x41,0x82,0x00,0x10 == beq 0x10 ; Groups: jump
+
+!# issue 1481 ARM64 LDR operand2
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0xe9,0x03,0x40,0xf9 == ldr x9, [sp] ; operands[1].mem.base: REG = sp
+
+!# issue 968 PPC absolute branch: bdnzla
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x42,0x00,0x12,0x37 == bdnzla 0x1234
+
+!# issue 968 PPC absolute branch: bdzla
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x42,0x40,0x12,0x37 == bdzla 0x1234
+
+!# issue X86 xrelease xchg
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x87,0x03 == xrelease xchg dword ptr [ebx], eax
+
+!# issue X86 xacquire xchg
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf2,0x87,0x03 == xacquire xchg dword ptr [ebx], eax
+
+!# issue X86 xrelease
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0xf0,0x31,0x1f == xrelease lock xor dword ptr [rdi], ebx
+
+!# issue 1477 X86 xacquire
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf2,0xf0,0x31,0x1f == xacquire lock xor dword ptr [rdi], ebx
+
+!# issue PPC JUMP group
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x82,0x00,0x10 == beq 0x10 ; Groups: jump
+
+!# issue 1468 PPC bdnz
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x101086c: 0x42,0x00,0xff,0xf8 == bdnz 0x1010864
+
+!# issue PPC bdnzt
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x41,0x00,0xff,0xac == bdnzt lt, 0xfac
+
+!# issue 1469 PPC CRx
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x4c,0x02,0x39,0x82 == crxor cr0lt, cr0eq, cr1un ; operands[0].type: REG = cr0lt
+
+!# issue 1468 B target
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x4b,0xff,0xf8,0x00 == b 0x800
+
+!# issue 1456 test alt 1
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf6,0x08,0x00 == test byte ptr [eax], 0
+
+!# issue 1456 test alt 2
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf7,0x08,0x00,0x00,0x00,0x00 == test dword ptr [eax], 0
+
+!# issue 1472 lock sub
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x2B,0x45,0x08 == lock sub eax, dword ptr [ebp + 8]
+
+!# issue 1472 lock or
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x0B,0x45,0x08 == lock or eax, dword ptr [ebp + 8]
+
+!# issue 1472 lock and
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x23,0x45,0x08 == lock and eax, dword ptr [ebp + 8]
+
+!# issue 1472 lock add
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x03,0x45,0x08 == lock add eax, dword ptr [ebp + 8]
+
+!# issue 1456 MOV dr
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x23,0x00 == mov dr0, eax
+
+!# issue 1456 MOV dr
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x21,0x00 == mov eax, dr0
+
+!# issue 1456 MOV cr
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x22,0x00 == mov cr0, eax
+
+!# issue 1472 lock adc
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf0,0x12,0x45,0x08 == lock adc al, byte ptr [ebp + 8]
+
+!# issue 1456 xmmword
+!# CS_ARCH_X86, CS_MODE_32, None
+0x66,0x0f,0x2f,0x00 == comisd xmm0, xmmword ptr [eax]
+
+!# issue 1456 ARM printPKHASRShiftImm
+!# CS_ARCH_ARM, CS_MODE_THUMB, None
+0xca,0xea,0x21,0x06 == pkhtb r6, sl, r1, asr #0x20
+
+!# issue 1456 EIZ
+!# CS_ARCH_X86, CS_MODE_32, None
+0x8d,0xb4,0x26,0x00,0x00,0x00,0x00 == lea esi, [esi]
+
+!# issue 1456 ARM POP
+!# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, None
+0x04,0x10,0x9d,0xe4 == pop {r1}
+
+!# issue 1456
+!# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x31,0x02,0xa0,0xe1 == lsr r0, r1, r2 ; operands[2].type: REG = r2
+
+!# issue 1456
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x0c,0x00,0x80,0x12 == mov w12, #-1 ; operands[1].type: IMM = 0xffffffffffffffff
+
+0xb8,0x00,0x00,0x00,0x00 == movl $0, %eax
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
+0xb8,0x00,0x00,0x00,0x00 == movl $0, %eax
+
+0xd1,0x5e,0x48 == rcrl $1, 0x48(%esi)
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, None
+0xd1,0x5e,0x48 == rcr dword ptr [esi + 0x48], 1
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
+0xd1,0x5e,0x48 == rcrl $1, 0x48(%esi)
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, None
+0x62,0x00 == bound eax, qword ptr [eax]
+
+!# issue 1454
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0xf0,0x0f,0xb1,0x1e == lock cmpxchg dword ptr [esi], ebx ; Registers read: eax esi ebx
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x03,0x0e == umov w0, v1.b[1] ; operands[1].vas: 0x4
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x06,0x0e == umov w0, v1.h[1] ; operands[1].vas: 0x8
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0xc4,0xe1,0xf8,0x90,0xc0 == kmovq k0, k0
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0xc4,0xe1,0xfb,0x92,0xc3 == kmovq k0, rbx
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0x62,0xf1,0x7d,0x48,0x74,0x83,0x12,0x00,0x00,0x00 == vpcmpeqb k0, zmm0, zmmword ptr [rbx + 0x12]
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0x62,0xf2,0x7d,0x48,0x30,0x43,0x08 == vpmovzxbw zmm0, ymmword ptr [rbx + 0x100]
+
+!# issue x86 BND register (OSS-fuzz #13467)
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0x0f,0x1a,0x1a == bndldx bnd3, [edx] ; operands[0].type: REG = bnd3
+
+!# issue 1335
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x1f,0xc0 == nop eax
+
+!# issue 1335
+!# CS_ARCH_X86, CS_MODE_64, None
+0x48,0x0f,0x1f,0x00 == nop qword ptr [rax]
+
+!# issue 1259
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0f,0x0d,0x44,0x11,0x40 == prefetch byte ptr [rcx + rdx + 0x40]
+
+!# issue 1259
+!# CS_ARCH_X86, CS_MODE_64, None
+0x41,0x0f,0x0d,0x44,0x12,0x40 == prefetch byte ptr [r10 + rdx + 0x40]
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x7f,0x4c,0x24,0x40 == movdqa xmmword ptr [rsp + 0x40], xmm1 ; operands[0].access: WRITE
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x7e,0x04,0x24 == movd dword ptr [rsp], xmm0 ; operands[0].access: WRITE
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0xf3,0x41,0x0f,0x7f,0x4d,0x00 == movdqu xmmword ptr [r13], xmm1 ; operands[0].access: WRITE
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x48,0x0f,0x1e,0xc8 == rdsspq rax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x1e,0xc8 == rdsspd eax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x48,0x0f,0xae,0xe8 == incsspq rax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0xae,0xe8 == incsspd eax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x01,0xea == saveprevssp
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x01,0x28 == rstorssp dword ptr [rax]
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0x67,0xf3,0x0f,0x01,0x28 == rstorssp dword ptr [eax]
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0x48,0x0f,0x38,0xf6,0x00 == wrssq qword ptr [rax], rax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0x67,0x0f,0x38,0xf6,0x00 == wrssd dword ptr [eax], eax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x01,0xe8 == setssbsy
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0xae,0x30 == clrssbsy dword ptr [rax]
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0x67,0xf3,0x0f,0xae,0x30 == clrssbsy dword ptr [eax]
+
+!# issue 1206
+!# CS_ARCH_X86, CS_MODE_64, None
+0xc4,0xe2,0x7d,0x5a,0x0c,0x0e == vbroadcasti128 ymm1, xmmword ptr [rsi + rcx]
+
+!# issue xchg 16bit
+!# CS_ARCH_X86, CS_MODE_16, None
+0x91 == xchg cx, ax
+
+!# issue ROL 1, ATT syntax
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
+0x66,0x48,0xf3,0xd1,0xc0 == rolw $1, %ax
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x1e,0xfa == endbr64
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x0f,0x1e,0xfa == endbr64
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x1e,0xfb == endbr32
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x0f,0x1e,0xfb == endbr32
+
+!# issue x64 jmp
+!# CS_ARCH_X86, CS_MODE_64, None
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue x64att jmp
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue x32 jmp
+!# CS_ARCH_X86, CS_MODE_32, None
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue x32att jmp
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue 1389
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x73,0xf9,0x01 == pslldq xmm1, 1 ; operands[1].size: 1
+
+!# issue 1389
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT | CS_OPT_DETAIL
+0x66,0x0f,0x73,0xf9,0x01 == pslldq $1, %xmm1 ; operands[0].size: 1
+
+!# issue x64 unsigned
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_UNSIGNED
 0x66,0x83,0xc0,0x80 == add ax, 0xff80
 
-!# issue 0
+!# issue x64att unsigned
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT | CS_OPT_UNSIGNED
 0x66,0x83,0xc0,0x80 == addw $0xff80, %ax
 
@@ -25,6 +570,14 @@
 !# issue 1262
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0: 0x0f,0x94,0x44,0x24,0x1f == sete byte ptr [rsp + 0x1f] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x0f 0x94 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x1f ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x1f ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
+
+!# issue 1263
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0: 0x67,0x48,0x89,0x18 == mov qword ptr [eax], rbx
+
+!# issue 1263
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0: 0x67,0x48,0x8b,0x03 == mov rax, qword ptr [ebx]
 
 !# issue 1255
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
@@ -82,8 +635,8 @@
 !# CS_ARCH_X86, CS_MODE_64, None
 0x0: 0xf0,0x0f,0x1f,0x00 == lock nop dword ptr [rax]
 
-!# issue 913
-!# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
+// !# issue 913
+// !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
 0x0: 0x04,0x10,0x9d,0xe4 == pop {r1} ; op_count: 1 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; Write-back: True ; Registers read: sp ; Registers modified: sp r1 ; Groups: arm 
 
 !# issue 884
@@ -128,7 +681,7 @@
 
 !# issue 804
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
-0x0: 0x66,0x48,0xf3,0xd1,0xc0 == rol $1, %ax
+0x0: 0x66,0x48,0xf3,0xd1,0xc0 == rolw $1, %ax
 
 !# issue 789
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
@@ -188,7 +741,7 @@
 
 !# issue 545
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0x0: 0x95 == xchg eax, ebp ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x95 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x0 ; disp: 0x0 ; sib: 0x0 ; op_count: 2 ; operands[0].type: REG = eax ; operands[0].size: 4 ; operands[0].access: READ | WRITE ; operands[1].type: REG = ebp ; operands[1].size: 4 ; operands[1].access: READ | WRITE ; Registers read: eax ebp ; Registers modified: eax ebp ; Groups: not64bitmode 
+0x0: 0x95 == xchg ebp, eax ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x95 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x0 ; disp: 0x0 ; sib: 0x0 ; op_count: 2 ; operands[0].type: REG = ebp ; operands[0].size: 4 ; operands[0].access: READ | WRITE ; operands[1].type: REG = eax ; operands[1].size: 4 ; operands[1].access: READ | WRITE ; Registers read: ebp eax ; Registers modified: ebp eax ; Groups: not64bitmode 
 
 !# issue 544
 !# CS_ARCH_X86, CS_MODE_32, None
@@ -208,11 +761,11 @@
 
 !# issue 492
 !# CS_ARCH_X86, CS_MODE_32, None
-0x0: 0xff,0x18 == lcall [eax]
+0x0: 0xff,0x18 == call ptr [eax]
 
 !# issue 492
 !# CS_ARCH_X86, CS_MODE_32, None
-0x0: 0xff,0x28 == ljmp [eax]
+0x0: 0xff,0x28 == jmp ptr [eax]
 
 !# issue 492
 !# CS_ARCH_X86, CS_MODE_32, None
@@ -304,7 +857,7 @@
 
 !# issue 450
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0x0: 0xff,0x2d,0x34,0x35,0x23,0x01 == ljmp [0x1233534] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0xff 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x2d ; disp: 0x1233534 ; sib: 0x0 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.disp: 0x1233534 ; operands[0].size: 6 ; Groups: jump 
+0x0: 0xff,0x2d,0x34,0x35,0x23,0x01 == jmp ptr [0x1233534] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0xff 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x2d ; disp: 0x1233534 ; sib: 0x0 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.disp: 0x1233534 ; operands[0].size: 6 ; Groups: jump 
 
 !# issue 448
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
@@ -320,7 +873,7 @@
 
 !# issue 353
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0x0: 0xe6,0xa2 == out 0xa2, al ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0xe6 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x0 ; disp: 0x0 ; sib: 0x0 ; imm_count: 1 ; imms[1]: 0xa2 ; op_count: 2 ; operands[0].type: IMM = 0xa2 ; operands[0].size: 4 ; operands[1].type: REG = al ; operands[1].size: 1 ; operands[1].access: READ ; Registers read: al
+0x0: 0xe6,0xa2 == out 0xa2, al ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0xe6 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x0 ; disp: 0x0 ; sib: 0x0 ; imm_count: 1 ; imms[1]: 0xa2 ; op_count: 2 ; operands[0].type: IMM = 0xa2 ; operands[0].size: 1 ; operands[1].type: REG = al ; operands[1].size: 1 ; operands[1].access: READ ; Registers read: al
 
 !# issue 305
 !# CS_ARCH_X86, CS_MODE_32, None
@@ -334,9 +887,9 @@
 !# CS_ARCH_X86, CS_MODE_32, None
 0x0: 0x66,0xf3,0xf2,0x0f,0x59,0xff == mulsd xmm7, xmm7
 
-!# issue 298
-!# CS_ARCH_X86, CS_MODE_32, None
-0x0: 0xf2,0x66,0x0f,0x59,0xff == mulpd xmm7, xmm7
+// !# issue 298
+// !# CS_ARCH_X86, CS_MODE_32, None
+// 0x0: 0xf2,0x66,0x0f,0x59,0xff == mulpd xmm7, xmm7
 
 !# issue 294
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL

@@ -8,6 +8,8 @@
 
 #include <capstone/capstone.h>
 
+void print_string_hex(const char *comment, unsigned char *str, size_t len);
+
 static struct {
 	const char *name;
 	cs_arch arch;
@@ -18,6 +20,10 @@ static struct {
 	{ "armbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN },
 	{ "arml", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN },
 	{ "armle", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN },
+	{ "armv8", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8 },
+	{ "thumbv8", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_V8 },
+	{ "armv8be", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8 | CS_MODE_BIG_ENDIAN },
+	{ "thumbv8be", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_V8 | CS_MODE_BIG_ENDIAN },
 	{ "cortexm", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_MCLASS },
 	{ "thumb", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB },
 	{ "thumbbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN },
@@ -25,6 +31,12 @@ static struct {
 	{ "arm64", CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN },
 	{ "arm64be", CS_ARCH_ARM64, CS_MODE_BIG_ENDIAN },
 	{ "mips", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_LITTLE_ENDIAN },
+	{ "mipsmicro", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_MICRO },
+	{ "mipsbemicro", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_MICRO | CS_MODE_BIG_ENDIAN },
+	{ "mipsbe32r6", CS_ARCH_MIPS, CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN},
+	{ "mipsbe32r6micro", CS_ARCH_MIPS, CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN | CS_MODE_MICRO },
+	{ "mips32r6", CS_ARCH_MIPS, CS_MODE_MIPS32R6 },
+	{ "mips32r6micro", CS_ARCH_MIPS, CS_MODE_MIPS32R6 | CS_MODE_MICRO },
 	{ "mipsbe", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN },
 	{ "mips64", CS_ARCH_MIPS, CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN },
 	{ "mips64be", CS_ARCH_MIPS, CS_MODE_MIPS64 | CS_MODE_BIG_ENDIAN },
@@ -34,16 +46,24 @@ static struct {
 	{ "x32att", CS_ARCH_X86, CS_MODE_32 }, // CS_MODE_32, CS_OPT_SYNTAX_ATT
 	{ "x64", CS_ARCH_X86, CS_MODE_64 }, // CS_MODE_64
 	{ "x64att", CS_ARCH_X86, CS_MODE_64 }, // CS_MODE_64, CS_OPT_SYNTAX_ATT
+	{ "ppc32", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc32be", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN },
+	{ "ppc32qpx", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_QPX | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc32beqpx", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_QPX | CS_MODE_BIG_ENDIAN },
+	{ "ppc32ps", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_PS | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc32beps", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_PS | CS_MODE_BIG_ENDIAN },
 	{ "ppc64", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_LITTLE_ENDIAN },
 	{ "ppc64be", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN },
+	{ "ppc64qpx", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_QPX | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc64beqpx", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_QPX | CS_MODE_BIG_ENDIAN },
 	{ "sparc", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN },
+	{ "sparcv9", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN | CS_MODE_V9 },
 	{ "systemz", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
 	{ "sysz", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
 	{ "s390x", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
 	{ "xcore", CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN },
 	{ "m68k", CS_ARCH_M68K, CS_MODE_BIG_ENDIAN },
 	{ "m68k40", CS_ARCH_M68K, CS_MODE_M68K_040 },
-	{ "tms320c64x", CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN },
 	{ "tms320c64x", CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN },
 	{ "m6800", CS_ARCH_M680X, CS_MODE_M680X_6800 },
 	{ "m6801", CS_ARCH_M680X, CS_MODE_M680X_6801 },
@@ -56,7 +76,21 @@ static struct {
 	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ "hcs08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
 	{ "evm", CS_ARCH_EVM, 0 },
+<<<<<<< HEAD
 	{ "mos65xx", CS_ARCH_MOS65XX, 0 },
+=======
+	{ "wasm", CS_ARCH_WASM, 0 },
+	{ "bpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC },
+	{ "bpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_CLASSIC },
+	{ "ebpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED },
+	{ "ebpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED },
+	{ "riscv32", CS_ARCH_RISCV, CS_MODE_RISCV32 },
+	{ "riscv64", CS_ARCH_RISCV, CS_MODE_RISCV64 },
+	{ "6502", CS_ARCH_MOS65XX, CS_MODE_MOS65XX_6502 },
+	{ "65c02", CS_ARCH_MOS65XX, CS_MODE_MOS65XX_65C02 },
+	{ "w65c02", CS_ARCH_MOS65XX, CS_MODE_MOS65XX_W65C02 },
+	{ "65816", CS_ARCH_MOS65XX, CS_MODE_MOS65XX_65816_LONG_MX },
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
 	{ NULL }
 };
 
@@ -72,7 +106,10 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins);
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
 void print_insn_detail_m680x(csh handle, cs_insn *ins);
 void print_insn_detail_evm(csh handle, cs_insn *ins);
+void print_insn_detail_riscv(csh handle, cs_insn *ins);
+void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
+void print_insn_detail_bpf(csh handle, cs_insn *ins);
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
 
@@ -135,7 +172,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 static void usage(char *prog)
 {
 	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
-	printf("Syntax: %s [-u|-d|-s|-v] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("Syntax: %s [-d|-s|-u|-v] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
 	if (cs_support(CS_ARCH_X86)) {
@@ -153,6 +190,10 @@ static void usage(char *prog)
 		printf("        thumb       thumb mode\n");
 		printf("        thumbbe     thumb + big endian\n");
 		printf("        cortexm     thumb + cortex-m extensions\n");
+		printf("        armv8       arm v8\n");
+		printf("        thumbv8     thumb v8\n");
+		printf("        armv8be     arm v8 + big endian\n");
+		printf("        thumbv8be   thumb v8 + big endian\n");
 	}
 
 	if (cs_support(CS_ARCH_ARM64)) {
@@ -168,8 +209,16 @@ static void usage(char *prog)
 	}
 
 	if (cs_support(CS_ARCH_PPC)) {
+		printf("        ppc32       ppc32 + little endian\n");
+		printf("        ppc32be     ppc32 + big endian\n");
+		printf("        ppc32qpx    ppc32 + qpx + little endian\n");
+		printf("        ppc32beqpx  ppc32 + qpx + big endian\n");
+		printf("        ppc32ps     ppc32 + ps + little endian\n");
+		printf("        ppc32beps   ppc32 + ps + big endian\n");
 		printf("        ppc64       ppc64 + little endian\n");
 		printf("        ppc64be     ppc64 + big endian\n");
+		printf("        ppc64qpx    ppc64 + qpx + little endian\n");
+		printf("        ppc64beqpx  ppc64 + qpx + big endian\n");
 	}
 
 	if (cs_support(CS_ARCH_SPARC)) {
@@ -211,18 +260,43 @@ static void usage(char *prog)
 	}
 
 	if (cs_support(CS_ARCH_MOS65XX)) {
+<<<<<<< HEAD
 		printf("        mos65xx     MOS65XX family\n");
+=======
+		printf("        6502        MOS 6502\n");
+		printf("        65c02       WDC 65c02\n");
+		printf("        w65c02      WDC w65c02\n");
+		printf("        65816       WDC 65816 (long m/x)\n");
+	}
+
+	if (cs_support(CS_ARCH_WASM)) {
+		printf("        wasm:       Web Assembly\n");
+	}
+
+	if (cs_support(CS_ARCH_BPF)) {
+		printf("        bpf         Classic BPF\n");
+		printf("        bpfbe       Classic BPF + big endian\n");
+		printf("        ebpf        Extended BPF\n");
+		printf("        ebpfbe      Extended BPF + big endian\n");
+	}
+
+	if (cs_support(CS_ARCH_RISCV)) {
+		printf("        riscv32     riscv32\n");
+		printf("        riscv64     riscv64\n");
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
 	}
 
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
-	printf("        -u show immediates as unsigned\n");
 	printf("        -s decode in SKIPDATA mode\n");
+	printf("        -u show immediates as unsigned\n");
 	printf("        -v show version & Capstone core build info\n\n");
 }
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 {
+	printf("\tID: %u (%s)\n", ins->id, cs_insn_name(handle, ins->id));
+
 	switch(arch) {
 		case CS_ARCH_X86:
 			print_insn_detail_x86(handle, md, ins);
@@ -260,8 +334,17 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_EVM:
 			print_insn_detail_evm(handle, ins);
 			break;
+		case CS_ARCH_WASM:
+			print_insn_detail_wasm(handle, ins);
+			break;
 		case CS_ARCH_MOS65XX:
 			print_insn_detail_mos65xx(handle, ins);
+			break;
+		case CS_ARCH_BPF:
+			print_insn_detail_bpf(handle, ins);
+			break;
+		case CS_ARCH_RISCV:
+			print_insn_detail_riscv(handle, ins);
 			break;
 		default: break;
 	}
@@ -358,9 +441,24 @@ int main(int argc, char **argv)
 				if (cs_support(CS_ARCH_EVM)) {
 					printf("evm=1 ");
 				}
+				
+				if (cs_support(CS_ARCH_WASM)) {
+					printf("wasm=1 ");
+				}
 
 				if (cs_support(CS_ARCH_MOS65XX)) {
 					printf("mos65xx=1 ");
+<<<<<<< HEAD
+=======
+				}
+
+				if (cs_support(CS_ARCH_BPF)) {
+					printf("bpf=1 ");
+				}
+
+				if (cs_support(CS_ARCH_RISCV)) {
+					printf("riscv=1 ");
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
 				}
 
 				if (cs_support(CS_SUPPORT_DIET)) {

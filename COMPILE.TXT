@@ -25,7 +25,11 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
   The other way of customize Capstone without having to edit config.mk is to
   pass the desired options on the commandline to ./make.sh. Currently,
+<<<<<<< HEAD
   Capstone supports 7 options, as followings.
+=======
+  Capstone supports 8 options, as followings.
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
 
   - CAPSTONE_ARCHS: specify list of architectures to compiled in.
   - CAPSTONE_USE_SYS_DYN_MEM: change this if you have your own dynamic memory management.
@@ -34,6 +38,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   - CAPSTONE_X86_ATT_DISABLE: disables AT&T syntax on x86.
   - CAPSTONE_STATIC: build static library.
   - CAPSTONE_SHARED: build dynamic (shared) library.
+  - CAPSTONE_DEBUG: enable debug build supporting assert().
 
   By default, Capstone uses system dynamic memory management, both DIET and X86_REDUCE
   modes are disable, and builds all the static & shared libraries.
@@ -84,6 +89,10 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 	/usr/include/capstone/arm.h
 	/usr/include/capstone/arm64.h
+<<<<<<< HEAD
+=======
+	/usr/include/capstone/bpf.h
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
 	/usr/include/capstone/capstone.h
 	/usr/include/capstone/evm.h
 	/usr/include/capstone/m680x.h
@@ -95,6 +104,10 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 	/usr/include/capstone/sparc.h
 	/usr/include/capstone/systemz.h
 	/usr/include/capstone/tms320c64x.h
+<<<<<<< HEAD
+=======
+	/usr/include/capstone/wasm.h
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
 	/usr/include/capstone/x86.h
 	/usr/include/capstone/xcore.h
 	/usr/lib/libcapstone.a

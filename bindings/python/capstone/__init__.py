@@ -35,6 +35,11 @@ __all__ = [
     'CS_ARCH_TMS320C64X',
     'CS_ARCH_M680X',
     'CS_ARCH_EVM',
+<<<<<<< HEAD
+=======
+    'CS_ARCH_BPF',
+    'CS_ARCH_RISCV',
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
     'CS_ARCH_MOS65XX',
     'CS_ARCH_ALL',
 
@@ -53,6 +58,9 @@ __all__ = [
     'CS_MODE_V8',
     'CS_MODE_V9',
     'CS_MODE_QPX',
+    'CS_MODE_SPE',
+    'CS_MODE_BOOKE',
+    'CS_MODE_PS',
     'CS_MODE_M68K_000',
     'CS_MODE_M68K_010',
     'CS_MODE_M68K_020',
@@ -71,6 +79,18 @@ __all__ = [
     'CS_MODE_M680X_6811',
     'CS_MODE_M680X_CPU12',
     'CS_MODE_M680X_HCS08',
+    'CS_MODE_BPF_CLASSIC',
+    'CS_MODE_BPF_EXTENDED',
+    'CS_MODE_RISCV32',
+    'CS_MODE_RISCV64',
+    'CS_MODE_RISCVC',
+    'CS_MODE_MOS65XX_6502',
+    'CS_MODE_MOS65XX_65C02',
+    'CS_MODE_MOS65XX_W65C02',
+    'CS_MODE_MOS65XX_65816',
+    'CS_MODE_MOS65XX_65816_LONG_M',
+    'CS_MODE_MOS65XX_65816_LONG_X',
+    'CS_MODE_MOS65XX_65816_LONG_MX',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -78,6 +98,7 @@ __all__ = [
     'CS_OPT_SYNTAX_ATT',
     'CS_OPT_SYNTAX_NOREGNAME',
     'CS_OPT_SYNTAX_MASM',
+    'CS_OPT_SYNTAX_MOTOROLA',
 
     'CS_OPT_DETAIL',
     'CS_OPT_MODE',
@@ -153,7 +174,10 @@ CS_ARCH_TMS320C64X = 9
 CS_ARCH_M680X = 10
 CS_ARCH_EVM = 11
 CS_ARCH_MOS65XX = 12
-CS_ARCH_MAX = 13
+CS_ARCH_WASM = 13
+CS_ARCH_BPF = 14
+CS_ARCH_RISCV = 15
+CS_ARCH_MAX = 16
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -171,6 +195,9 @@ CS_MODE_MIPS32R6 = (1 << 6)    # Mips32r6 ISA
 CS_MODE_MIPS2 = (1 << 7)       # Mips II ISA
 CS_MODE_V9 = (1 << 4)          # Sparc V9 mode (for Sparc)
 CS_MODE_QPX = (1 << 4)         # Quad Processing eXtensions mode (PPC)
+CS_MODE_SPE = (1 << 5)         # Signal Processing Engine mode (PPC)
+CS_MODE_BOOKE = (1 << 6)       # Book-E mode (PPC)
+CS_MODE_PS = (1 << 7)          # Paired-singles mode (PPC)
 CS_MODE_M68K_000 = (1 << 1)    # M68K 68000 mode
 CS_MODE_M68K_010 = (1 << 2)    # M68K 68010 mode
 CS_MODE_M68K_020 = (1 << 3)    # M68K 68020 mode
@@ -190,6 +217,18 @@ CS_MODE_M680X_6809 = (1 << 7)  # M680X M6809 mode
 CS_MODE_M680X_6811 = (1 << 8)  # M680X M68HC11 mode
 CS_MODE_M680X_CPU12 = (1 << 9)  # M680X CPU12 mode
 CS_MODE_M680X_HCS08 = (1 << 10)  # M680X HCS08 mode
+CS_MODE_BPF_CLASSIC = 0          # Classic BPF mode (default)
+CS_MODE_BPF_EXTENDED = (1 << 0)  # Extended BPF mode
+CS_MODE_RISCV32 = (1 << 0)       # RISCV32 mode
+CS_MODE_RISCV64 = (1 << 1)       # RISCV64 mode
+CS_MODE_RISCVC  = (1 << 2)       # RISCV compressed mode
+CS_MODE_MOS65XX_6502 = (1 << 1) # MOS65XXX MOS 6502
+CS_MODE_MOS65XX_65C02 = (1 << 2) # MOS65XXX WDC 65c02
+CS_MODE_MOS65XX_W65C02 = (1 << 3) # MOS65XXX WDC W65c02
+CS_MODE_MOS65XX_65816 = (1 << 4) # MOS65XXX WDC 65816, 8-bit m/x
+CS_MODE_MOS65XX_65816_LONG_M = (1 << 5) # MOS65XXX WDC 65816, 16-bit m, 8-bit x 
+CS_MODE_MOS65XX_65816_LONG_X = (1 << 6) # MOS65XXX WDC 65816, 8-bit m, 16-bit x
+CS_MODE_MOS65XX_65816_LONG_MX = CS_MODE_MOS65XX_65816_LONG_M | CS_MODE_MOS65XX_65816_LONG_X
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -232,6 +271,7 @@ CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OP
 CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_NOREGNAME = 3   # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
 CS_OPT_SYNTAX_MASM = 4      # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_MOTOROLA = 5 # MOS65XX use $ as hex prefix
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
@@ -329,7 +369,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, bpf, riscv
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -346,6 +386,8 @@ class _cs_arch(ctypes.Union):
         ('m680x', m680x.CsM680x),
         ('evm', evm.CsEvm),
         ('mos65xx', mos65xx.CsMOS65xx),
+        ('bpf', bpf.CsBPF),
+        ('riscv', riscv.CsRISCV),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -642,7 +684,7 @@ class CsInsn(object):
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, self.xop_cc, self.sse_cc, \
                 self.avx_cc, self.avx_sae, self.avx_rm, self.eflags, \
-                self.modrm_offset, self.disp_offset, self.disp_size, self.imm_offset, self.imm_size, \
+                self.encoding, self.modrm_offset, self.disp_offset, self.disp_size, self.imm_offset, self.imm_size, \
                 self.operands) = x86.get_arch_info(self._raw.detail.contents.arch.x86)
         elif arch == CS_ARCH_M68K:
                 (self.operands, self.op_size) = m68k.get_arch_info(self._raw.detail.contents.arch.m68k)
@@ -665,6 +707,10 @@ class CsInsn(object):
             (self.pop, self.push, self.fee) = evm.get_arch_info(self._raw.detail.contents.arch.evm)
         elif arch == CS_ARCH_MOS65XX:
             (self.am, self.modifies_flags, self.operands) = mos65xx.get_arch_info(self._raw.detail.contents.arch.mos65xx)
+        elif arch == CS_ARCH_BPF:
+            (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
+        elif arch == CS_ARCH_RISCV:
+            (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
 
 
     def __getattr__(self, name):
@@ -789,12 +835,12 @@ class CsInsn(object):
         if regs_read_count.value > 0:
             regs_read = regs_read[:regs_read_count.value]
         else:
-            regs_read = ()
+            regs_read = []
 
         if regs_write_count.value > 0:
             regs_write = regs_write[:regs_write_count.value]
         else:
-            regs_write = ()
+            regs_write = []
 
         return (regs_read, regs_write)
 
@@ -1058,8 +1104,16 @@ class Cs(object):
             print(code)'''
         # Pass a bytearray by reference
         size = len(code)
+<<<<<<< HEAD
         if isinstance(code, bytearray):
             code = ctypes.byref(ctypes.c_char.from_buffer(code))
+=======
+        view = memoryview(code)
+        if not view.readonly:
+            code = ctypes.byref(ctypes.c_char.from_buffer(view))
+        elif not isinstance(code, bytes):
+            code = view.tobytes()
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
         res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
@@ -1086,8 +1140,16 @@ class Cs(object):
         all_insn = ctypes.POINTER(_cs_insn)()
         size = len(code)
         # Pass a bytearray by reference
+<<<<<<< HEAD
         if isinstance(code, bytearray):
             code = ctypes.byref(ctypes.c_char.from_buffer(code))
+=======
+        view = memoryview(code)
+        if not view.readonly:
+            code = ctypes.byref(ctypes.c_char.from_buffer(view))
+        elif not isinstance(code, bytes):
+            code = view.tobytes()
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
         res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
@@ -1119,10 +1181,13 @@ def debug():
     else:
         diet = "standard"
 
-    archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K, \
-        "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
-        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X, \
-        "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX }
+    archs = {
+        "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K,
+        "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC,
+        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
+        "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
+        'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV,
+    }
 
     all_archs = ""
     keys = archs.keys()

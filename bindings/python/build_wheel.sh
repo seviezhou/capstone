@@ -12,4 +12,8 @@ else
 fi
 cd dist
 auditwheel repair *.whl
+<<<<<<< HEAD
 mv -f wheelhouse/*.whl .
+=======
+mv -f wheelhouse/*.whl .
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e

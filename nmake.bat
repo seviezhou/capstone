@@ -19,6 +19,12 @@ if "%1"=="TMS320C64x" set %arch%=TMS320C64X
 if "%1"=="M680x" set %arch%=M680X
 if "%1"=="EVM" set %arch%=EVM
 if "%1"=="MOS65XX" set %arch%=MOS65XX
+<<<<<<< HEAD
+=======
+if "%1"=="WASM" set %arch%=WASM
+if "%1"=="BPF" set %arch%=BPF
+if "%1"=="RISCV" set %arch%=RISCV
+>>>>>>> 00f5057fad5fbb623c9d7aa4e3e00e499954556e
 
 if not "%arch%"=="" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_%arch%_SUPPORT=ON"
 
